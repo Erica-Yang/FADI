@@ -1,0 +1,28 @@
+1.数据集处理
+data/
+    VOCdevkit
+    few_shot_voc_split
+
+ln -s /root/autodl-tmp/datasets/VOC2007 /root/projects/FADI/data/VOCdevkit/VOC2007
+ln -s /root/autodl-tmp/datasets/VOC2012 /root/projects/FADI/data/VOCdevkit/VOC2012
+ln -s /root/autodl-tmp/datasets/vocsplit /root/projects/FADI/data/VOCdevkit/few_shot_voc_split
+
+ln -s /root/autodl-tmp/datasets/VOC2012 /root/projects/FADI/datasets/VOC2012
+ln -s /root/autodl-tmp/datasets/VOC2007 /root/projects/FADI/data/VOC2007
+
+预训练权重：
+models/
+    voc_split1_base.pth
+    voc_split1_base_surgery.pth
+    voc_split2_base.pth
+    voc_split2_base_surgery.pth
+    voc_split3_base.pth
+    voc_split3_base_surgery.pth
+
+2.
+# association
+train.py asso_config=configs/voc_split1/fadi_split1_shot2_association.py
+
+# discrimination
+train.py disc_config=configs/voc_split${split}/fadi_split${split}_shot${shot}_discrimination.py \
+    --load-from work_dirs/fadi_split${split}_shot${shot}_association/latest.pth
